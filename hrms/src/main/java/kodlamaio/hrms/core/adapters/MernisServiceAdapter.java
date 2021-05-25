@@ -16,6 +16,7 @@ public class MernisServiceAdapter implements UserCheckService{
             result=hlikpsPublicSoap.TCKimlikNoDogrula(Long.parseLong(nationalIdentity),firstName,lastName,birthDate.getYear());
         }catch (Exception e){
             e.printStackTrace();
+
         }
         return result;
 

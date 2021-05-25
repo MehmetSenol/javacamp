@@ -1,7 +1,8 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
-import kodlamaio.hrms.core.*;
+import kodlamaio.hrms.core.adapters.UserCheckService;
+import kodlamaio.hrms.core.utilities.*;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.Employer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import java.util.List;
 @Service
 public class EmployerManager implements EmployerService {
     private EmployerDao employerDao;
+    private UserCheckService userCheckService;
 
     @Autowired
-    public EmployerManager(EmployerDao employerDao) {
+    public EmployerManager(EmployerDao employerDao, UserCheckService userCheckService) {
         this.employerDao = employerDao;
+        this.userCheckService = userCheckService;
     }
 
 
@@ -24,15 +27,7 @@ public class EmployerManager implements EmployerService {
         return new SuccessDataResult<>(this.employerDao.findAll(),"Data Listelendi");
     }
 
-    @Override
-    public boolean checkMailActivation() {
-        return true;
-    }
 
-    @Override
-    public boolean checkUserActivationEmployee() {
-        return true;
-    }
 
     @Override
     public Result add(Employer employer) {
@@ -44,9 +39,9 @@ public class EmployerManager implements EmployerService {
             return new ErrorResult(("Aynı Domaine Sahip Mail Adresi Kullanılmalıdır"));
         }else if(employerDao.findAllByEmail(employer.getEmail()).stream().count()!=0){
             return new ErrorResult("Aynı E posta Kullanılmaktadır");
-        }else if(!this.checkMailActivation()){
+        }else if(!this.userCheckService.checkMailActivation()){
             return new ErrorResult("Lütfen Emailinizi Onaylayınız");
-        }else if(!this.checkUserActivationEmployee()){
+        }else if(!this.userCheckService.checkUserActivationEmployee()){
             return new ErrorResult("Çalışanımız Tarafından Daha Onaylanmadınız");
         }else{
             employerDao.save(employer);
