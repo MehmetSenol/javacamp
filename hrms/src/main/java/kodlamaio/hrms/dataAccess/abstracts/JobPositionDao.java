@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface JobPositionDao extends JpaRepository<JobPosition,Integer> {
     List<JobPosition> findAllByPosition(String position);
+
 }

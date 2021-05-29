@@ -8,7 +8,6 @@ public interface UserCheckService {
     default boolean checkMailActivation(){
         return true;
     }
-
     default boolean  checkUserActivationEmployee(){
         return true;
     }

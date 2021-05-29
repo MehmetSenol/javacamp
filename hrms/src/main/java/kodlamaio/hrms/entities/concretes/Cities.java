@@ -10,24 +10,21 @@ import java.util.List;
 
 @Data
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobPostings"})
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","jobPostings"})
-@Table(name="job_positions")
-public class JobPosition {
+@Table(name = "cities")
+public class Cities {
 
     @Id
-    @GeneratedValue
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
-    @Column(name="position")
-    private String position;
+    @Column(name ="city_name")
+    private String cityName;
 
-    @OneToMany(mappedBy = "jobPosition")
+   @OneToMany(mappedBy = "cities")
     private List<JobPostings> jobPostings;
-
-
-
 
 }

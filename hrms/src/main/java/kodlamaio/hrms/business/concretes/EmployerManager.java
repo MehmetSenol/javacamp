@@ -15,10 +15,12 @@ public class EmployerManager implements EmployerService {
     private EmployerDao employerDao;
     private UserCheckService userCheckService;
 
+
     @Autowired
     public EmployerManager(EmployerDao employerDao, UserCheckService userCheckService) {
         this.employerDao = employerDao;
         this.userCheckService = userCheckService;
+
     }
 
 
